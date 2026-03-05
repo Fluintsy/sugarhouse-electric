@@ -1,0 +1,64 @@
+# WordPress core and admin files
+/wp-admin/
+/wp-includes/
+wp-config.php
+wp-config-sample.php
+
+# WordPress uploads
+wp-content/uploads/
+
+# WordPress plugins (exclude custom/critical ones)
+/wp-content/plugins/*
+!/wp-content/plugins/README.md
+
+# WordPress themes (keep only custom)
+/wp-content/themes/*
+!/wp-content/themes/sugarhouse-electric/
+
+# WordPress cache and temporary files
+/wp-content/cache/
+/wp-content/backup-*
+wp-content/advanced-cache.php
+
+# Composer and dependencies
+vendor/
+composer.lock
+
+# Environment and config
+.env
+.env.local
+*.pem
+*.key
+
+# Database
+*.sql
+seed-content.sql
+
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+error_log
+
+# Docker (optional - keep compose config)
+.docker/
+db-data/
+
+# Misc
+.claude
+*.jpg
+*.png

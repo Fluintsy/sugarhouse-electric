@@ -1,0 +1,140 @@
+/**
+ * Sugar House Electric - Additional Styles
+ */
+
+/* Smooth transitions */
+* {
+    transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+/* Hero buttons container */
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+/* Service card link styles */
+.service-card a {
+    color: inherit;
+}
+
+.service-card .learn-more:hover {
+    text-decoration: underline;
+}
+
+/* Project card hover */
+.project-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.project-card a {
+    color: var(--primary-color);
+}
+
+.project-card a:hover {
+    color: var(--accent-color);
+}
+
+/* WordPress specific overrides */
+.wp-block-image img {
+    border-radius: 10px;
+}
+
+.wp-block-gallery {
+    margin: 30px 0;
+}
+
+/* Contact form styling for Contact Form 7 */
+.wpcf7-form input[type="text"],
+.wpcf7-form input[type="email"],
+.wpcf7-form input[type="tel"],
+.wpcf7-form textarea,
+.wpcf7-form select {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.wpcf7-form input[type="submit"] {
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    padding: 15px 40px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.wpcf7-form input[type="submit"]:hover {
+    background: var(--accent-color);
+}
+
+/* Pagination styles */
+.pagination,
+.nav-links {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 40px;
+}
+
+.pagination .page-numbers,
+.nav-links .page-numbers {
+    padding: 10px 15px;
+    background: var(--white);
+    border: 1px solid #e2e8f0;
+    border-radius: 5px;
+    color: var(--text-color);
+}
+
+.pagination .page-numbers.current,
+.nav-links .page-numbers.current {
+    background: var(--primary-color);
+    color: var(--white);
+    border-color: var(--primary-color);
+}
+
+.pagination .page-numbers:hover:not(.current),
+.nav-links .page-numbers:hover:not(.current) {
+    background: var(--light-bg);
+}
+
+/* Accessibility */
+:focus {
+    outline: 2px solid var(--accent-color);
+    outline-offset: 2px;
+}
+
+.screen-reader-text {
+    clip: rect(1px, 1px, 1px, 1px);
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+}
+
+/* Print styles */
+@media print {
+    .site-header,
+    .site-footer,
+    .cta {
+        display: none;
+    }
+
+    .hero {
+        background: none;
+        color: #000;
+        padding: 20px 0;
+    }
+}
