@@ -7,7 +7,7 @@ get_header();
 
 <main>
     <!-- Hero Section -->
-    <section class="hero" style="background: linear-gradient(rgba(26, 54, 93, 0.8), rgba(26, 54, 93, 0.85)), url('<?php echo esc_url(SUGARHOUSE_URI . '/assets/images/hero-bg.jpg'); ?>') center/cover no-repeat;">
+    <section class="hero" style="background: linear-gradient(rgba(26, 54, 93, 0.8), rgba(26, 54, 93, 0.85)), url('<?php echo esc_url(SUGARHOUSE_URI . '/assets/images/hero-bg.webp'); ?>') center/cover no-repeat;">
         <div class="container">
             <div class="hero-badge">Serving Utah Since 2009</div>
             <h1>Your Trusted Local Electrician</h1>
