@@ -467,3 +467,225 @@ function sugarhouse_service_schema() {
     echo '<script type="application/ld+json">' . wp_json_encode($schema, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT) . '</script>' . "\n";
 }
 add_action('wp_head', 'sugarhouse_service_schema');
+
+/**
+ * Contact Form 7 Integration
+ *
+ * Creates a default CF7 contact form on theme setup if none exists.
+ * The form matches the static fallback fields: Name, Email, Phone, Service Type, Message.
+ */
+function sugarhouse_create_cf7_form() {
+    // Only run if CF7 is active
+    if (!class_exists('WPCF7_ContactForm')) {
+        return;
+    }
+
+    // Check if we already created one
+    if (get_option('sugarhouse_cf7_form_id')) {
+        return;
+    }
+
+    $form_template = '<div class="contact-form">
+<label>Your Name *
+    [text* your-name placeholder "Your Name"]</label>
+
+<label>Your Email *
+    [email* your-email placeholder "Your Email"]</label>
+
+<label>Your Phone
+    [tel your-phone placeholder "Your Phone"]</label>
+
+<label>Select a Service
+    [select service include_blank "Select a Service" "Residential Electrical" "Commercial Electrical" "Emergency Service" "Panel Upgrade" "Lighting Installation" "Other"]</label>
+
+<label>Tell us about your project *
+    [textarea* your-message placeholder "Tell us about your project"]</label>
+
+[submit class:contact-form-submit "Send Message"]
+</div>';
+
+    $mail_template = 'From: [your-name] <[your-email]>
+Subject: New Contact Form Submission - [service]
+
+Name: [your-name]
+Email: [your-email]
+Phone: [your-phone]
+Service: [service]
+
+Message:
+[your-message]
+
+---
+This email was sent from the contact form at Sugar House Electric.';
+
+    $mail_recipient = 'apex@fluintsy.com';
+
+    $form = WPCF7_ContactForm::get_template();
+    $form->set_title('Contact Form - Sugar House Electric');
+
+    $properties = $form->get_properties();
+    $properties['form'] = $form_template;
+    $properties['mail']['subject'] = 'New Contact Form Submission - [service]';
+    $properties['mail']['sender'] = 'wordpress@' . wp_parse_url(home_url(), PHP_URL_HOST);
+    $properties['mail']['recipient'] = $mail_recipient;
+    $properties['mail']['body'] = $mail_template;
+    $properties['mail']['additional_headers'] = 'Reply-To: [your-email]';
+    $properties['messages'] = array_merge($properties['messages'], array(
+        'mail_sent_ok' => 'Thank you! Your message has been sent. We\'ll get back to you within 24 hours.',
+        'mail_sent_ng' => 'Oops, there was an error sending your message. Please try again or call us directly.',
+        'validation_error' => 'Please fill in the required fields below.',
+        'spam' => 'There was a problem submitting your form. Please try again.',
+        'accept_terms' => 'Please accept the terms and conditions.',
+        'invalid_required' => 'This field is required.',
+        'invalid_email' => 'Please enter a valid email address.',
+        'invalid_tel' => 'Please enter a valid phone number.',
+    ));
+    $form->set_properties($properties);
+    $form->save();
+
+    update_option('sugarhouse_cf7_form_id', $form->id());
+}
+add_action('after_setup_theme', 'sugarhouse_create_cf7_form');
+add_action('activated_plugin', function ($plugin) {
+    if (strpos($plugin, 'contact-form-7') !== false) {
+        sugarhouse_create_cf7_form();
+    }
+});
+
+/**
+ * Get the CF7 contact form shortcode for the theme
+ */
+function sugarhouse_get_cf7_shortcode() {
+    $form_id = get_option('sugarhouse_cf7_form_id');
+
+    // If no saved form, try to find any CF7 form
+    if (!$form_id && class_exists('WPCF7_ContactForm')) {
+        $forms = WPCF7_ContactForm::find();
+        if (!empty($forms)) {
+            $form_id = $forms[0]->id();
+            update_option('sugarhouse_cf7_form_id', $form_id);
+        }
+    }
+
+    if ($form_id) {
+        return '[contact-form-7 id="' . intval($form_id) . '" title="Contact Form - Sugar House Electric"]';
+    }
+
+    return false;
+}
+
+/**
+ * Style CF7 forms to match the theme
+ */
+function sugarhouse_cf7_styles() {
+    if (!class_exists('WPCF7_ContactForm')) {
+        return;
+    }
+
+    wp_enqueue_style('sugarhouse-cf7', false);
+    wp_add_inline_style('sugarhouse-cf7', '
+        /* CF7 form styles to match theme */
+        .wpcf7 .contact-form label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: var(--text-color);
+        }
+
+        .wpcf7 .contact-form input[type="text"],
+        .wpcf7 .contact-form input[type="email"],
+        .wpcf7 .contact-form input[type="tel"],
+        .wpcf7 .contact-form select,
+        .wpcf7 .contact-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #e2e8f0;
+            border-radius: 5px;
+            font-size: 16px;
+            font-family: inherit;
+        }
+
+        .wpcf7 .contact-form textarea {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        .wpcf7 .contact-form input:focus,
+        .wpcf7 .contact-form select:focus,
+        .wpcf7 .contact-form textarea:focus {
+            outline: none;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 0 3px rgba(43, 108, 176, 0.1);
+        }
+
+        .wpcf7 .contact-form-submit {
+            background: var(--primary-color);
+            color: var(--white);
+            border: none;
+            padding: 15px 40px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .wpcf7 .contact-form-submit:hover {
+            background: var(--accent-color);
+        }
+
+        /* CF7 validation and response messages */
+        .wpcf7-not-valid-tip {
+            color: #e53e3e;
+            font-size: 13px;
+            margin-top: -15px;
+            margin-bottom: 15px;
+            display: block;
+        }
+
+        .wpcf7-not-valid {
+            border-color: #e53e3e !important;
+        }
+
+        .wpcf7-response-output {
+            margin: 20px 0 0 !important;
+            padding: 15px 20px !important;
+            border-radius: 5px !important;
+            font-size: 15px;
+        }
+
+        .wpcf7-mail-sent-ok,
+        .wpcf7 form.sent .wpcf7-response-output {
+            border-color: #38a169 !important;
+            background: #f0fff4;
+            color: #22543d;
+        }
+
+        .wpcf7-mail-sent-ng,
+        .wpcf7 form.failed .wpcf7-response-output,
+        .wpcf7 form.aborted .wpcf7-response-output {
+            border-color: #e53e3e !important;
+            background: #fff5f5;
+            color: #742a2a;
+        }
+
+        .wpcf7 form.invalid .wpcf7-response-output,
+        .wpcf7-validation-errors {
+            border-color: #dd6b20 !important;
+            background: #fffaf0;
+            color: #7b341e;
+        }
+
+        .wpcf7 form.spam .wpcf7-response-output {
+            border-color: #e53e3e !important;
+            background: #fff5f5;
+            color: #742a2a;
+        }
+
+        /* Spinner */
+        .wpcf7-spinner {
+            margin: 0 10px;
+        }
+    ');
+}
+add_action('wp_enqueue_scripts', 'sugarhouse_cf7_styles');

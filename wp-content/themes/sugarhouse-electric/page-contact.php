@@ -19,12 +19,11 @@ get_header();
                 <div class="contact-form-wrapper">
                     <h2>Send Us a Message</h2>
                     <?php
-                    // Check if Contact Form 7 shortcode exists in the content
-                    if (have_posts()) : while (have_posts()) : the_post();
-                        $content = get_the_content();
-                        if (!empty($content)) :
-                            the_content();
-                        else :
+                    $cf7_shortcode = function_exists('sugarhouse_get_cf7_shortcode') ? sugarhouse_get_cf7_shortcode() : false;
+
+                    if ($cf7_shortcode && shortcode_exists('contact-form-7')) :
+                        echo do_shortcode($cf7_shortcode);
+                    else :
                     ?>
                         <form class="contact-form" method="post">
                             <input type="text" name="name" placeholder="Your Name *" required>
@@ -43,12 +42,9 @@ get_header();
                             <button type="submit">Send Message</button>
                         </form>
                         <p style="margin-top: 15px; color: #718096; font-size: 14px;">
-                            <em>Note: Install Contact Form 7 plugin and add shortcode to this page for full functionality.</em>
+                            <em>Contact Form 7 plugin is not active. Please activate it to enable full form functionality.</em>
                         </p>
-                    <?php
-                        endif;
-                    endwhile; endif;
-                    ?>
+                    <?php endif; ?>
                 </div>
 
                 <div class="contact-info-wrapper">
