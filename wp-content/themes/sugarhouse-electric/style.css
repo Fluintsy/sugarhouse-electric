@@ -88,17 +88,9 @@ img {
 }
 
 .site-logo {
-    display: flex;
-    align-items: center;
     font-size: 24px;
     font-weight: 700;
     color: var(--primary-color);
-}
-
-.site-logo img {
-    height: 60px;
-    width: auto;
-    max-width: 250px;
 }
 
 .site-logo span {
@@ -839,10 +831,6 @@ img {
 
     .contact-grid {
         grid-template-columns: 1fr;
-    }
-
-    .site-logo img {
-        height: 45px;
     }
 
     .header-top .container {

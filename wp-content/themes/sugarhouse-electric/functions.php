@@ -367,7 +367,7 @@ function sugarhouse_schema_markup() {
             array('@type' => 'City', 'name' => 'Park City, UT')
         ),
         'priceRange' => '$$',
-        'image' => SUGARHOUSE_URI . '/assets/images/fluintsy-logo.svg',
+        'image' => SUGARHOUSE_URI . '/assets/images/logo.png',
         'sameAs' => array()
     );
 

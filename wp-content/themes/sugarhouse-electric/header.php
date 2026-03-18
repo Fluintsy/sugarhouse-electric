@@ -37,7 +37,7 @@
                 <?php the_custom_logo(); ?>
             <?php else : ?>
                 <a href="<?php echo esc_url(home_url('/')); ?>" class="site-logo">
-                    <img src="<?php echo esc_url(SUGARHOUSE_URI . '/assets/images/fluintsy-logo.svg'); ?>" alt="Fluintsy - Sugar House Electric" style="height: 60px; width: auto;">
+                    <img src="<?php echo esc_url(SUGARHOUSE_URI . '/assets/images/logo.png'); ?>" alt="Sugar House Electric" style="height: 60px; width: auto;">
                 </a>
             <?php endif; ?>
 
