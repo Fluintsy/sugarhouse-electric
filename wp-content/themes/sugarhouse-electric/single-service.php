@@ -35,11 +35,19 @@ get_header();
                         </div>
 
                         <div style="background: var(--light-bg); padding: 30px; border-radius: 10px;">
+                            <?php if ($phone = sugarhouse_get_contact('phone')) : ?>
                             <h3 style="margin-bottom: 20px; color: var(--primary-color);">Call Us Now</h3>
-                            <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', sugarhouse_get_contact('phone'))); ?>" style="font-size: 24px; font-weight: 700; color: var(--secondary-color);">
-                                <?php echo esc_html(sugarhouse_get_contact('phone')); ?>
+                            <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', $phone)); ?>" style="font-size: 24px; font-weight: 700; color: var(--secondary-color);">
+                                <?php echo esc_html($phone); ?>
                             </a>
                             <p style="margin-top: 10px; color: #718096;">Available 24/7 for emergencies</p>
+                            <?php else : ?>
+                            <h3 style="margin-bottom: 20px; color: var(--primary-color);">Email Us</h3>
+                            <a href="mailto:<?php echo esc_attr(sugarhouse_get_contact('email')); ?>" style="font-size: 20px; font-weight: 700; color: var(--secondary-color);">
+                                <?php echo esc_html(sugarhouse_get_contact('email')); ?>
+                            </a>
+                            <p style="margin-top: 10px; color: #718096;">We'll respond within 24 hours</p>
+                            <?php endif; ?>
                         </div>
                     </aside>
                 </div>

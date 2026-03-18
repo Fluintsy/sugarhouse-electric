@@ -54,15 +54,17 @@ get_header();
                 <div class="contact-info-wrapper">
                     <h2>Contact Information</h2>
 
+                    <?php if ($phone = sugarhouse_get_contact('phone')) : ?>
                     <div class="contact-info-item">
                         <div class="icon">📞</div>
                         <div>
                             <h4>Phone</h4>
-                            <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', sugarhouse_get_contact('phone'))); ?>">
-                                <?php echo esc_html(sugarhouse_get_contact('phone')); ?>
+                            <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', $phone)); ?>">
+                                <?php echo esc_html($phone); ?>
                             </a>
                         </div>
                     </div>
+                    <?php endif; ?>
 
                     <div class="contact-info-item">
                         <div class="icon">📧</div>
@@ -74,13 +76,15 @@ get_header();
                         </div>
                     </div>
 
+                    <?php if ($address = sugarhouse_get_contact('address')) : ?>
                     <div class="contact-info-item">
                         <div class="icon">📍</div>
                         <div>
                             <h4>Service Area</h4>
-                            <p><?php echo esc_html(sugarhouse_get_contact('address')); ?></p>
+                            <p><?php echo esc_html($address); ?></p>
                         </div>
                     </div>
+                    <?php endif; ?>
 
                     <div class="contact-info-item">
                         <div class="icon">🕐</div>

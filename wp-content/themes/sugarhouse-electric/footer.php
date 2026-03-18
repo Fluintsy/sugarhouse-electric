@@ -47,17 +47,21 @@
             <div class="footer-col">
                 <h4>Contact Us</h4>
                 <ul>
+                    <?php if ($phone = sugarhouse_get_contact('phone')) : ?>
                     <li>
-                        <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', sugarhouse_get_contact('phone'))); ?>">
-                            <?php echo esc_html(sugarhouse_get_contact('phone')); ?>
+                        <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', $phone)); ?>">
+                            <?php echo esc_html($phone); ?>
                         </a>
                     </li>
+                    <?php endif; ?>
                     <li>
                         <a href="mailto:<?php echo esc_attr(sugarhouse_get_contact('email')); ?>">
                             <?php echo esc_html(sugarhouse_get_contact('email')); ?>
                         </a>
                     </li>
-                    <li><?php echo esc_html(sugarhouse_get_contact('address')); ?></li>
+                    <?php if ($address = sugarhouse_get_contact('address')) : ?>
+                    <li><?php echo esc_html($address); ?></li>
+                    <?php endif; ?>
                     <li><?php echo esc_html(sugarhouse_get_contact('hours')); ?></li>
                     <?php if ($license = sugarhouse_get_contact('license')) : ?>
                         <li>License #<?php echo esc_html($license); ?></li>

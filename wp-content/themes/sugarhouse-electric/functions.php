@@ -253,7 +253,7 @@ function sugarhouse_customize_register($wp_customize) {
 
     // Phone Number
     $wp_customize->add_setting('sugarhouse_phone', array(
-        'default'           => '(801) 555-1234',
+        'default'           => '',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('sugarhouse_phone', array(
@@ -264,7 +264,7 @@ function sugarhouse_customize_register($wp_customize) {
 
     // Email
     $wp_customize->add_setting('sugarhouse_email', array(
-        'default'           => 'info@sugarhouseelectric.com',
+        'default'           => 'apex@fluintsy.com',
         'sanitize_callback' => 'sanitize_email',
     ));
     $wp_customize->add_control('sugarhouse_email', array(
@@ -275,7 +275,7 @@ function sugarhouse_customize_register($wp_customize) {
 
     // Address
     $wp_customize->add_setting('sugarhouse_address', array(
-        'default'           => 'Salt Lake City, UT',
+        'default'           => '',
         'sanitize_callback' => 'sanitize_text_field',
     ));
     $wp_customize->add_control('sugarhouse_address', array(
@@ -313,9 +313,9 @@ add_action('customize_register', 'sugarhouse_customize_register');
  */
 function sugarhouse_get_contact($field) {
     $defaults = array(
-        'phone'   => '(801) 555-1234',
-        'email'   => 'info@sugarhouseelectric.com',
-        'address' => 'Salt Lake City, UT',
+        'phone'   => '',
+        'email'   => 'apex@fluintsy.com',
+        'address' => '',
         'hours'   => 'Mon-Fri: 7AM - 6PM',
         'license' => '',
     );
@@ -348,21 +348,7 @@ function sugarhouse_schema_markup() {
         'name' => 'Sugar House Electric',
         'description' => 'Full-service electrical contractor providing services for commercial, industrial and residential clients throughout the Salt Lake, Provo and Ogden metro areas in Utah.',
         'url' => home_url('/'),
-        'telephone' => sugarhouse_get_contact('phone'),
         'email' => sugarhouse_get_contact('email'),
-        'address' => array(
-            '@type' => 'PostalAddress',
-            'streetAddress' => '2223 So Highland Dr, #E6-132',
-            'addressLocality' => 'Salt Lake City',
-            'addressRegion' => 'UT',
-            'postalCode' => '84106',
-            'addressCountry' => 'US'
-        ),
-        'geo' => array(
-            '@type' => 'GeoCoordinates',
-            'latitude' => '40.7233',
-            'longitude' => '-111.8585'
-        ),
         'openingHoursSpecification' => array(
             array(
                 '@type' => 'OpeningHoursSpecification',
@@ -450,7 +436,6 @@ function sugarhouse_service_schema() {
         'provider' => array(
             '@type' => 'Electrician',
             'name' => 'Sugar House Electric',
-            'telephone' => sugarhouse_get_contact('phone'),
             'url' => home_url('/')
         ),
         'areaServed' => array(
