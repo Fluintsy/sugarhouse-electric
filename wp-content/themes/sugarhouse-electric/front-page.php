@@ -7,16 +7,22 @@ get_header();
 
 <main>
     <!-- Hero Section -->
-    <section class="hero" style="background: linear-gradient(rgba(26, 54, 93, 0.8), rgba(26, 54, 93, 0.85)), url('<?php echo esc_url(SUGARHOUSE_URI . '/assets/images/hero-bg.jpg'); ?>') center/cover no-repeat;">
+    <section class="hero" style="background: linear-gradient(rgba(26, 54, 93, 0.8), rgba(26, 54, 93, 0.85)), url('<?php echo esc_url(SUGARHOUSE_URI . '/assets/images/hero-bg.webp'); ?>') center/cover no-repeat;">
         <div class="container">
             <div class="hero-badge">Serving Utah Since 2009</div>
             <h1>Your Trusted Local Electrician</h1>
             <p>Full-service electrical contractor for residential, commercial, and industrial clients throughout Salt Lake, Provo, and Ogden. Licensed, bonded, and insured.</p>
             <div class="hero-buttons">
                 <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="btn btn-primary">Get a Free Estimate</a>
-                <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', sugarhouse_get_contact('phone'))); ?>" class="btn btn-secondary">
-                    <span class="btn-icon">📞</span> <?php echo esc_html(sugarhouse_get_contact('phone')); ?>
+                <?php if ($phone = sugarhouse_get_contact('phone')) : ?>
+                <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', $phone)); ?>" class="btn btn-secondary">
+                    <span class="btn-icon">📞</span> <?php echo esc_html($phone); ?>
                 </a>
+                <?php else : ?>
+                <a href="mailto:<?php echo esc_attr(sugarhouse_get_contact('email')); ?>" class="btn btn-secondary">
+                    <span class="btn-icon">📧</span> Email Us
+                </a>
+                <?php endif; ?>
             </div>
             <div class="hero-trust">
                 <span>✓ Licensed & Insured</span>
@@ -259,9 +265,15 @@ get_header();
             <p>Contact us today for a free consultation and estimate on your electrical project.</p>
             <div class="cta-buttons">
                 <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="btn btn-primary">Request a Free Quote</a>
-                <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', sugarhouse_get_contact('phone'))); ?>" class="btn btn-secondary">
-                    Call <?php echo esc_html(sugarhouse_get_contact('phone')); ?>
+                <?php if ($phone = sugarhouse_get_contact('phone')) : ?>
+                <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', $phone)); ?>" class="btn btn-secondary">
+                    Call <?php echo esc_html($phone); ?>
                 </a>
+                <?php else : ?>
+                <a href="mailto:<?php echo esc_attr(sugarhouse_get_contact('email')); ?>" class="btn btn-secondary">
+                    Email Us
+                </a>
+                <?php endif; ?>
             </div>
         </div>
     </section>

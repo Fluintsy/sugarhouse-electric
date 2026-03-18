@@ -37,9 +37,15 @@ get_header();
                     <h3 style="margin-bottom: 15px; color: var(--primary-color);">Need Similar Work Done?</h3>
                     <p style="margin-bottom: 20px;">Contact us to discuss your project requirements.</p>
                     <a href="<?php echo esc_url(home_url('/contact/')); ?>" class="btn btn-primary">Get a Quote</a>
-                    <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', sugarhouse_get_contact('phone'))); ?>" class="btn btn-secondary" style="margin-left: 10px; border-color: var(--primary-color); color: var(--primary-color);">
-                        Call <?php echo esc_html(sugarhouse_get_contact('phone')); ?>
+                    <?php if ($phone = sugarhouse_get_contact('phone')) : ?>
+                    <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', $phone)); ?>" class="btn btn-secondary" style="margin-left: 10px; border-color: var(--primary-color); color: var(--primary-color);">
+                        Call <?php echo esc_html($phone); ?>
                     </a>
+                    <?php else : ?>
+                    <a href="mailto:<?php echo esc_attr(sugarhouse_get_contact('email')); ?>" class="btn btn-secondary" style="margin-left: 10px; border-color: var(--primary-color); color: var(--primary-color);">
+                        Email Us
+                    </a>
+                    <?php endif; ?>
                 </div>
             </div>
         </section>

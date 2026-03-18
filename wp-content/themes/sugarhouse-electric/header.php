@@ -18,10 +18,12 @@
                 <?php endif; ?>
             </div>
             <div class="header-top-right">
-                <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', sugarhouse_get_contact('phone'))); ?>">
-                    <?php echo esc_html(sugarhouse_get_contact('phone')); ?>
-                </a>
-                <span> | </span>
+                <?php if ($phone = sugarhouse_get_contact('phone')) : ?>
+                    <a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', $phone)); ?>">
+                        <?php echo esc_html($phone); ?>
+                    </a>
+                    <span> | </span>
+                <?php endif; ?>
                 <a href="mailto:<?php echo esc_attr(sugarhouse_get_contact('email')); ?>">
                     <?php echo esc_html(sugarhouse_get_contact('email')); ?>
                 </a>
@@ -65,7 +67,11 @@ function sugarhouse_fallback_menu() {
         <li><a href="<?php echo esc_url(home_url('/projects/')); ?>">Projects</a></li>
         <li><a href="<?php echo esc_url(home_url('/about/')); ?>">About</a></li>
         <li><a href="<?php echo esc_url(home_url('/contact/')); ?>">Contact</a></li>
-        <li><a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', sugarhouse_get_contact('phone'))); ?>" class="nav-cta">Call Now</a></li>
+        <?php if ($phone = sugarhouse_get_contact('phone')) : ?>
+            <li><a href="tel:<?php echo esc_attr(preg_replace('/[^0-9]/', '', $phone)); ?>" class="nav-cta">Call Now</a></li>
+        <?php else : ?>
+            <li><a href="<?php echo esc_url(home_url('/contact/')); ?>" class="nav-cta">Get a Quote</a></li>
+        <?php endif; ?>
     </ul>
     <?php
 }

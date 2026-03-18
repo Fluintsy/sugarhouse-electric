@@ -1,6 +1,6 @@
 /*
 Theme Name: Sugar House Electric
-Theme URI: https://sugarhouseelectric.com
+Theme URI: https://fluintsy.com
 Author: Sugar House Electric
 Description: Custom theme for Sugar House Electric - Professional electrical services
 Version: 1.0.0
@@ -139,7 +139,7 @@ img {
 /* Hero Section */
 .hero {
     background: linear-gradient(rgba(26, 54, 93, 0.85), rgba(26, 54, 93, 0.85)),
-                url('assets/images/hero-bg.jpg') center/cover no-repeat;
+                url('assets/images/hero-bg.webp') center/cover no-repeat;
     color: var(--white);
     padding: 120px 0;
     text-align: center;
@@ -497,7 +497,7 @@ img {
 /* Page Header */
 .page-header {
     background: linear-gradient(rgba(26, 54, 93, 0.9), rgba(26, 54, 93, 0.9)),
-                url('assets/images/hero-bg.jpg') center/cover no-repeat;
+                url('assets/images/hero-bg.webp') center/cover no-repeat;
     color: var(--white);
     padding: 80px 0;
     text-align: center;
