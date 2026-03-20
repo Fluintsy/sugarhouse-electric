@@ -264,7 +264,7 @@ function sugarhouse_customize_register($wp_customize) {
 
     // Email
     $wp_customize->add_setting('sugarhouse_email', array(
-        'default'           => 'apex@fluintsy.com',
+        'default'           => 'info@sugarhouselectric.com',
         'sanitize_callback' => 'sanitize_email',
     ));
     $wp_customize->add_control('sugarhouse_email', array(
@@ -314,7 +314,7 @@ add_action('customize_register', 'sugarhouse_customize_register');
 function sugarhouse_get_contact($field) {
     $defaults = array(
         'phone'   => '',
-        'email'   => 'apex@fluintsy.com',
+        'email'   => 'info@sugarhouselectric.com',
         'address' => '',
         'hours'   => 'Mon-Fri: 7AM - 6PM',
         'license' => '',
@@ -503,7 +503,7 @@ Message:
 ---
 This email was sent from the contact form at Sugar House Electric.';
 
-    $mail_recipient = 'apex@fluintsy.com';
+    $mail_recipient = 'info@sugarhouselectric.com';
 
     $form = WPCF7_ContactForm::get_template();
     $form->set_title('Contact Form - Sugar House Electric');
