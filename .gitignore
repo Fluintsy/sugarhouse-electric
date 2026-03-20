@@ -62,3 +62,4 @@ db-data/
 .claude
 *.jpg
 *.png
+!docs/assets/images/logo.png
