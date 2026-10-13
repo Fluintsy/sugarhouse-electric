@@ -1,112 +1,30 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+Guidance for Claude Code when working in this repository.
 
 ## Project Overview
 
-WordPress website for Sugar House Electric, a local electrician business. The site is modeled after lighthouse-electrical.com with a focus on professional presentation, service showcases, and easy content management.
+Website for Sugar House Electric, a local electrician (Salt Lake City area). Client site: the content is ours, the domain belongs to the client.
 
-## Development Setup
+## What is live
 
-### Local WordPress Development (Docker)
+A static site in `docs/`, served by GitHub Pages from `master` `/docs` at https://fluintsy.github.io/sugarhouse-electric/. Pushing to `master` deploys it. Edit `docs/` for any site change; there is no build step.
 
-```bash
-# Start all containers
-docker compose up -d
+- Pages: `index.html`, `about.html`, `services.html`, `projects.html`, `contact.html`
+- Assets: `docs/assets/{css,js,images}`
+- Contact form: Formspree, configured in `docs/contact.html`. Do not commit account credentials.
 
-# Stop containers
-docker compose down
-
-# View logs
-docker compose logs -f wordpress
-
-# Restart containers
-docker compose restart
-```
-
-**URLs:**
-- WordPress: http://localhost:8080
-- phpMyAdmin: http://localhost:8081 (user: root, password: rootpassword)
-
-### WP-CLI (run inside container)
+## Local preview
 
 ```bash
-# Execute WP-CLI commands inside the container
-docker compose exec wordpress wp --allow-root <command>
-
-# Examples:
-docker compose exec wordpress wp --allow-root plugin list
-docker compose exec wordpress wp --allow-root theme activate sugarhouse-electric
+python3 -m http.server 8000 --directory docs
 ```
 
-### Theme Development
+## Legacy (not deployed)
 
-```bash
-# Navigate to theme directory
-cd wp-content/themes/sugarhouse-electric/
+`wp-content/` (WordPress theme) and `docker-compose.yml` are from an earlier WordPress approach. Do not assume the site runs on WordPress. Do not extend the theme unless the project moves back to WordPress. Compose contains local-dev placeholder database passwords for that legacy setup only.
 
-# If using npm for asset compilation
-npm install
-npm run dev      # Development with watch
-npm run build    # Production build
-```
+## Conventions
 
-## Architecture
-
-### WordPress Theme Structure
-
-- `/wp-content/themes/sugarhouse-electric/` - Custom theme
-  - `style.css` - Theme metadata and base styles
-  - `functions.php` - Theme setup, custom post types, enqueues
-  - `template-parts/` - Reusable template components
-  - `assets/` - CSS, JS, and images
-
-### Custom Post Types
-
-- **Services** - Electrical services offered (residential, commercial, emergency)
-- **Projects** - Portfolio of completed work with images
-- **Testimonials** - Customer reviews
-
-### Key Pages
-
-- Home (hero slider, services overview, recent projects, testimonials)
-- Services (detailed service descriptions)
-- Projects/Portfolio (filterable gallery)
-- About
-- Contact (form with service area map)
-
-## WordPress CLI Reference
-
-```bash
-# Plugin management
-wp plugin install <plugin-name> --activate
-wp plugin list
-
-# Theme management
-wp theme activate sugarhouse-electric
-
-# Content management
-wp post create --post_type=service --post_title="Residential Electrical"
-wp post list --post_type=project
-
-# Database
-wp search-replace 'old-domain.com' 'new-domain.com'
-```
-
-## Recommended Plugins
-
-- **Contact Form 7** or **WPForms** - Contact forms
-- **Yoast SEO** - Search optimization
-- **Smush** or **ShortPixel** - Image optimization
-- **UpdraftPlus** - Backups
-- **Wordfence** - Security
-
-## Design Reference
-
-Target design based on lighthouse-electrical.com:
-- Full-width hero with project imagery
-- Service categories with icons/images
-- Project portfolio grid
-- Trust badges/certifications
-- Prominent contact information in header/footer
-- Mobile-responsive design
+- Keep changes to `docs/` small and reviewable; the site is public as soon as `master` updates.
+- No secrets, keys, or client-private information in this repo (it is public).
